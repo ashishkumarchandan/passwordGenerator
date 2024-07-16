@@ -35,6 +35,22 @@ let getRandomInteger = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
+let generateRandomNumber = () => {
+  return getRandomInteger(0, 9);
+};
+
+let generateLowerCase = () => {
+  return String.fromCharCode(getRandomInteger(97, 123));
+};
+
+let generateUpperCase = () => {
+  return String.fromCharCode(getRandomInteger(65, 91));
+};
+
+let generateSymbol = () => {
+  const randNum = getRandomInteger(0, symbols.length);
+  return symbols.charAt(randNum);
+};
 document.addEventListener("DOMContentLoaded", () => {
   handleSlider();
   setIndicator();
