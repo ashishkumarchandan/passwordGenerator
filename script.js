@@ -51,6 +51,36 @@ let generateSymbol = () => {
   const randNum = getRandomInteger(0, symbols.length);
   return symbols.charAt(randNum);
 };
+
+let calculateStrength = () => {
+  let hasUpper = false;
+  let hasLower = false;
+  let hasNum = false;
+  let hasSym = false;
+  if (uppercaseCheck.checked) hasUpper = true;
+  if (lowercaseCheck.checked) hasLower = true;
+  if (numbersCheck.checked) hasNum = true;
+  if (symbolsCheck) hasSym = true;
+  if (hasUpper && hasLower && (hasNum || hasSym) && passwordLength >= 8)
+    setIndicator("#0f0");
+  else if ((hasLower || hasUpper) && (hasNum || hasSym) && passwordLength >= 6)
+    setIndicator("#ff0");
+  else setIndicator("#f00");
+};
+
+let copyContent = async () => {
+  try {
+    await navigator.clipboard.writeText(passwordDisplay.value);
+    copyMsg.textContent = "copied";
+  } catch (err) {
+    copyMsg.textContent = "Failed";
+  }
+  copyMsg.classList.add("active");
+  setTimeout(() => {
+    copyMsg.classList.remove("active");
+  }, 2000);
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   handleSlider();
   setIndicator();
