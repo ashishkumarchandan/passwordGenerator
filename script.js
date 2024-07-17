@@ -81,6 +81,56 @@ let copyContent = async () => {
   }, 2000);
 };
 
+inputSlider.addEventListener("input", (e) => {
+  passwordLength = e.target.value;
+  handleSlider();
+});
+
+copyBtn.addEventListener("click", () => {
+  if (passwordDisplay.value) copyContent();
+});
+
+generateButton.addEventListener("click", () => {
+  if (passwordLength < 8 || passwordLength > 20) return;
+  if (checkCount === 0) return;
+  generatePassword();
+});
+
+let sufflePassword = (sufflePassword) => {
+
+function handleCheckboxChange() {
+  checkCount = 0;
+  allCheckBox.forEach((checkbox) => {
+    if (checkbox.checked) checkCount++;
+  });
+  if (passwordLength < checkCount) {
+    passwordLength = checkCount;
+    handleSlider();
+  }
+  handleSlider();
+}
+
+allCheckBox.forEach((checkbox) => {
+  checkbox.addEventListener("change", handleCheckboxChange);
+});
+
+let funcArr = [];
+if (uppercaseCheck) funcArr.push(generateUpperCase);
+if (lowercaseCheck) funcArr.push(generateLowerCase);
+if (numbersCheck) funcArr.push(generateRandomNumber);
+if (symbolsCheck) funcArr.push(generateSymbol);
+
+for (let i = 0; i < funcArr.length; i++) {
+  password += funcArr[i]();
+}
+
+for (let i = 0; i < passwordLength - funcArr.length; i++) {
+  let randIndex = getRandomInteger(0, funcArr.length);
+}
+
+password = sufflePassword(Array.from(password));
+passwordDisplay.value = password;
+
 document.addEventListener("DOMContentLoaded", () => {
   handleSlider();
   setIndicator();
