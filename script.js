@@ -20,7 +20,7 @@ const symbols = "~`!@#$%^&*()_-+={[}]|:;<,>.?/";
 
 let password = "";
 let passwordLength = 8;
-let checkCount = 0;
+let checkCount = 1;
 
 let handleSlider = () => {
   inputSlider.value = passwordLength;
@@ -68,6 +68,7 @@ let calculateStrength = () => {
   else setIndicator("#f00");
 };
 
+
 let copyContent = async () => {
   try {
     await navigator.clipboard.writeText(passwordDisplay.value);
@@ -96,7 +97,13 @@ generateButton.addEventListener("click", () => {
   generatePassword();
 });
 
-let sufflePassword = (sufflePassword) => {
+let sufflePassword = (passwordArray) => {
+  for (let i = passwordArray.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [passwordArray[i], passwordArray[j]] = [passwordArray[j], passwordArray[i]];
+  }
+  return passwordArray.join("");
+}
 
 function handleCheckboxChange() {
   checkCount = 0;
@@ -130,6 +137,7 @@ for (let i = 0; i < passwordLength - funcArr.length; i++) {
 
 password = sufflePassword(Array.from(password));
 passwordDisplay.value = password;
+calculateStrength();
 
 document.addEventListener("DOMContentLoaded", () => {
   handleSlider();
